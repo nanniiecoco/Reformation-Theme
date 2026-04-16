@@ -1,0 +1,12 @@
+{% layout none %}
+{%- if search.performed -%}
+  <ul class="products collection row small-up-1 medium-up-4 no-padding">
+    {%- for item in search.results -%}{% comment %}start BSS Commerce Hide Price{% endcomment %}{% capture bss_lock_check %}{% render 'bss-lock-condition', scope: 'subject', subject: item, variable: 'transparent' %}{% endcapture %}{% if bss_lock_check contains 'true' %}{% render 'bss-hide-product-design', section: 'templates/search.recently-viewed.liquid', subject: item %}{% continue %}{% endif %}{% comment %}end BSS Commerce Hide Price{% endcomment %}
+      {%- if item.object_type == 'product' -%}
+			<li class="column">
+        {% render 'product-card', product_card_product: item %}
+			</li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}
