@@ -1,0 +1,136 @@
+{{ 'cap-cart.css' | asset_url | stylesheet_tag }}
+<script>
+    window.translations = {
+        otp_expired_resend: "{{ 'link_card.otp_expired_resend' | t }}",
+        otp_sent_registered_mobile: "{{ 'link_card.otp_sent_registered_mobile' | t }}",
+        unable_to_resend_otp: "{{ 'link_card.unable_to_resend_otp' | t }}",
+        error_resending_otp: "{{ 'link_card.error_resending_otp' | t }}",
+        phone_not_found_resend_otp: "{{ 'link_card.phone_not_found_resend_otp' | t }}",
+        has_error_try_again: "{{ 'link_card.has_error_try_again' | t }}",
+        please_enter_jps_club_id: "{{ 'link_card.please_enter_jps_club_id' | t }}",
+        please_enter_valid_phone: "{{ 'link_card.please_enter_valid_phone' | t }}",
+        please_enter_mobile_no: "{{ 'link_card.please_enter_mobile_no' | t }}",
+        please_enter_correct_otp: "{{ 'link_card.please_enter_correct_otp' | t }}",
+        error_verifying_otp: "{{ 'link_card.error_verifying_otp' | t }}",
+        otp_authentication_error: "{{ 'link_card.otp_authentication_error' | t }}",
+        please_enter_valid_id_or_contact: "{{ 'link_card.please_enter_valid_id_or_contact' | t }}",
+        error_not_found_phone_validate: "{{ 'link_card.error_not_found_phone_validate' | t }}",
+        missing_jps_id_or_customer_id: "{{ 'link_card.missing_jps_id_or_customer_id' | t }}",
+        please_select_valid_method: "{{ 'link_card.please_select_valid_method' | t }}"
+    }
+</script>
+<div id="loader-overlay" class="overlay">
+    <div class="spinner"></div>
+</div>
+<style>
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 99;
+    }
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
+</style>
+
+{% if customer %}
+    <div class="cap-block{% if customer.metafields.capillary.linkcard %} active{% endif %}">
+        <collapsible-row class="accordion">
+            <details class="cap-block__inner">
+                <summary class="cap-block__title">
+                    <h4>{{ 'link_card.jps_club_id' | t }}</h4>
+                    <span></span>
+                </summary>
+                <div class="collapsible__content accordion__content rte cap-block__content">
+                    {% if customer.metafields.capillary.linkcard %}
+                        <div class="jpscard-group">
+                            <img class="jpscard-group-img" src="https://mcstaging-1-5.cpschaps.com/media/smartosc/capillary/tier_jps_plus/default/JPS_PLUS__2.png" alt="Capillary Image">
+                            <div class="eligible-points">
+                                <h3 class="point-label">{{ 'link_card.eligible_points' | t }}</h3>
+                                <h2 class="points">0</h2>
+                            </div>
+                            <input type="hidden" name="name-type-card" id="name-type-card" value="{{ customer.metafields.capillary.capillary_loyalty_group }}">
+                            <input type="hidden" name="myjpscard_id" id="myjpscard_id" value="{{ customer.metafields.capillary.myjpscard_id }}">
+                        </div>
+                    {% else %}
+                        <div class="mycards-methods">
+                            <label for="link-method">{{ 'link_card.link_method' | t }}</label>
+                            <select name="link-method" id="link-method">
+                                <option value="jps_club" selected>{{ 'link_card.jps_club_id' | t }}</option>
+                                <option value="mobile_no">{{ 'link_card.mobile_no' | t }}</option>
+                            </select>
+                        </div>
+                        <div class="cap-block__item jps_club content-left">
+                            <div class="mycards-content">
+                                <div class="mycards method jps_club active">
+                                    <div class="jps_club_id__title">
+                                        <span>{{ 'link_card.jps_club_id' | t }}</span>
+                                    </div>
+                                    <div class="jps_club_id_container">
+                                        <input class="jps_club_id__input" type="text" name="club_id" id="myjpscard_id" value="" placeholder="{{ 'link_card.enter_jps_club_id' | t }}">
+                                    </div>
+                                </div>
+                                <div class="mycards method mobile_no">
+                                    <div class="mobile_no_id__title">
+                                        <span>{{ 'link_card.mobile_no_short' | t }}</span>
+                                    </div>
+                                    <div class="mobile_no_id_container">
+                                        <input class="mobile_no_id__input" type="text" name="mobile_no" id="mymobile_no" value="" placeholder="{{ 'link_card.enter_mobile_no' | t }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cap-block__item jps_club content-right">
+                            <div class="jps_club_add add-jpscard-button">
+                                <span>{{ 'link_card.add' | t }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="cap-block__error">
+<span class="mycard-error-msg">
+{{ 'link_card.please_enter_card_id' | t }}
+</span>
+                </div>
+            </details>
+        </collapsible-row>
+    </div>
+    <!-- Popup Form -->
+    <div id="otpPopupForm" class="otp-popup-form" style="display: none;">
+        <div class="form-content">
+            <span id="closeOtpButton" class="close-btn">&times;</span>
+            <h2>{{ 'link_card.otp_verification' | t }}</h2>
+            <p>{{ 'link_card.enter_otp_prompt' | t }}</p>
+            <p class="phone-number"></p>
+            <input type="hidden" name="phone-val" id="phone-val" value="{{ club.phone }}">
+            <input type="hidden" name="customer-id-val" id="customer-id-val" value="{{ customer.id }}">
+            <input type="hidden" name="time-show-rs" id="resend-time" value="">
+            <div class="otp-inputs">
+                <input class="otp-input" type="text" maxlength="1">
+                <input class="otp-input" type="text" maxlength="1">
+                <input class="otp-input" type="text" maxlength="1">
+                <input class="otp-input" type="text" maxlength="1">
+                <input class="otp-input" type="text" maxlength="1">
+                <input class="otp-input" type="text" maxlength="1">
+            </div>
+            <p class="resend-content">{{ 'link_card.did_not_receive_otp' | t }} <a href="#" id="resendOtpLink">{{ 'link_card.resend_otp' | t }}</a></p>
+            <p class="timer" id="otpTimer">05:00</p>
+            <p class="error-message" id="otpErrorMessage" style="display: none;">{{ 'link_card.otp_expired_resend' | t }}</p>
+            <button type="submit" id="submitOtpButton">{{ 'link_card.submit' | t }}</button>
+            <p class="help-link">{{ 'link_card.need_help_please_visit' | t }} <a href="#">{{ 'link_card.jps_club_website' | t }}</a></p>
+        </div>
+    </div>
+    <script src="{{ 'cap-cart.js' | asset_url }}" defer="defer"></script>
+{% endif %}

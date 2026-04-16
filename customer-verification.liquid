@@ -1,0 +1,64 @@
+{{ 'popup.css' | asset_url | stylesheet_tag }}
+
+{% assign customer_existed_in_capillary_meta_field = customer.metafields.jaspal.customer_existed_in_capillary_before_registering_on_shopify %}
+
+{% assign capillary_loyalty_type = customer.metafields.capillary.capillary_loyalty_type %}
+
+{% assign capillary_myjpscard_id_meta_field = customer.metafields.capillary.myjpscard_id %}
+
+{% assign global_config = shop.metaobjects.global_configuration['global-configuration'] %}
+
+{% assign time_does_not_trigger_a_popup_link_card_meta_object = global_config.time_does_not_trigger_a_popup_link_card %}
+
+<div class="customer-verification-section" data-section-id="{{ section.id }}">
+  <div id="capillaryPopup" class="capillary-popup">
+    <div class="popup-content">
+      <span class="close-popup" id="popupNo">&times;</span>
+      <p>
+        {{ 'customer_verification.found_phone' | t }}
+        <a href="#" id="popupYes">{{ 'customer_verification.link_now' | t }}</a>
+      </p>
+      <div class="do-not-show-wrapper" id="do-not-show-wrapper">
+        <label for="capillaryCheckbox">
+          <input type="checkbox" id="capillaryCheckbox" name="capillaryCheckbox">
+          <span>
+            {{- 'customer_verification.do_not_show' | t }}
+            <span id="popup-days">
+              {{ time_does_not_trigger_a_popup_link_card_meta_object | default: 0 }}
+            </span>
+            {{ 'customer_verification.days' | t }}
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading overlay -->
+<div id="loadingOverlay" class="loading-overlay" style="display: none;">
+  <div class="loading-spinner"></div>
+</div>
+
+<script>
+  /**
+    * Initialize customer data and handle display
+    */
+  (function initializeCustomerData() {
+  // Initialize basic customer object
+  window.customer = {
+  	{% if customer %}
+  	logged_in: true,
+  	id: {{ customer.id | json }},
+  	email: {{ customer.email | json }},
+  	existInCapillary: {% if customer_existed_in_capillary_meta_field == true %}true{% else %}false{% endif %},
+  	myjpscard_id: {% if capillary_myjpscard_id_meta_field != blank %}{{ capillary_myjpscard_id_meta_field | json }}{% else %}null{% endif %},
+    daysForDoNotShowPopup: {{ time_does_not_trigger_a_popup_link_card_meta_object | default: 0 }},
+    capillaryLoyaltyType: {% if capillary_loyalty_type != blank %}{{ capillary_loyalty_type | json }}{% else %}null{% endif %}
+  	{% else %}
+  	logged_in: false
+  	{% endif %}
+  };
+  })();
+</script>
+
+<script src="{{ 'popup.js' | asset_url }}" defer="defer"></script>
