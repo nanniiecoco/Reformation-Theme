@@ -1,0 +1,225 @@
+/* Font */
+@font-face {
+    font-family: 'icomoon';
+    src: url('icomoon.woff');
+}
+
+/* General Container */
+.my-jps-club-container {
+    border-top: 1px solid #000000;
+    background: #fff;
+    padding: 28px 0px 22px 0px;
+    margin-left: auto;
+    box-sizing: border-box;
+    font-family: 'Montserrat', Arial, sans-serif;
+    box-shadow: 0 2px 10px rgba(232, 65, 24, 0.04);
+}
+
+/* Headings */
+.my-jps-club-container h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 0 18px 0;
+    letter-spacing: 1.2px;
+}
+
+/* Text */
+.my-jps-club-container p {
+    font-size: 15px;
+    color: #222;
+    margin: 0;
+    line-height: 1.7em;
+}
+
+.my-jps-club-container strong {
+    font-weight: 700;
+    color: #222;
+}
+
+/* Points Section */
+.my-jps-club-container .points {
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+.my-jps-club-container .available-points {
+    margin-top: 14px;
+    font-size: 16px;
+}
+
+/* Redemption Points Select */
+.my-jps-club-container .redemption-points-select {
+    font-size: 16px;
+    outline: none;
+    background: #fff;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 10px 0px;
+    border-radius: 0;
+    width: 80%;
+    max-width: 200px;
+    display: block;
+}
+
+.my-jps-club-container .redemption-points-select:focus {
+    border-color: #222;
+}
+
+/* Redeemable Price */
+.my-jps-club-container .redeemable_price {
+    font-weight: bold;
+    color: #222;
+    font-size: 16px;
+}
+
+/* Redeem Button */
+.my-jps-club-container .redeem-btn {
+    background: #000000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 13px 0;
+    margin-top: 17px;
+    width: 100%;
+    letter-spacing: 1.2px;
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
+    box-shadow: 0 2px 6px rgba(232, 65, 24, 0.06);
+}
+
+.my-jps-club-container .redeem-btn:hover {
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #414042;
+}
+
+.my-jps-club-container .redeem-btn .icon-redeem::before {
+    font-family: 'icomoon' !important;
+    content: "\e92c";
+    font-size: 1.5rem;
+    color: #fff;
+    vertical-align: middle;
+}
+
+.my-jps-club-container .redeem-btn:hover .icon-redeem::before {
+    color: #000000;
+}
+
+.my-jps-club-container .redeem-btn-container .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    transform: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.my-jps-club-container .redeem-btn-container.loading .loading-overlay {
+    display: flex;
+    background: white;
+}
+
+.my-jps-club-container .redeem-btn-container.loading .loading-overlay svg {
+    width: 24px;
+}
+
+.my-jps-club-container .redeem-btn-container.loading .redeem-btn {
+    opacity: 0.5;
+}
+
+/* Available Points Select */
+.my-jps-club-container .available-points select {
+    min-width: 60px;
+    margin-right: 10px;
+}
+
+/* My Cards Points Row */
+.my-jps-club-container .mycards-point-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.mycards-point-row--flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 8px 0;
+}
+
+.available-points {
+    width: calc(100% - 130px);
+}
+
+.redemption-points-select {
+    width: 100%;
+    font-size: 14px;
+    border-color: #666;
+}
+
+.redeem-btn-container {
+    width: 120px;
+}
+
+.my-jps-club-container .mycards-point-row .text-bold {
+    font-size: 16px;
+}
+
+.my-jps-club-container .mycards-point-row span:last-child {
+    font-weight: bold;
+}
+
+.my-jps-club-container .mycards-point-row span:last-child {
+    text-align: right;
+    word-break: break-all; /* Helps if ID is long */
+}
+
+/* Accordion Toggle */
+.my-jps-club-container .accordion-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.my-jps-club-container .accordion-toggle .arrow {
+    display: inline-block;
+    height: 14px;
+    margin-right: 12px;
+    transition: transform 0.3s;
+    vertical-align: middle;
+}
+
+.my-jps-club-container .accordion-toggle .arrow::before {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    border: solid #000;
+    border-width: 0 0 3px 3px;
+    border-radius: 2px;
+    transform: rotate(135deg);
+    box-sizing: border-box;
+}
+
+/* Arrow States (Down & Up) */
+.my-jps-club-container .accordion-toggle[aria-expanded="false"] .arrow {
+    transform: rotate(0deg);
+}
+
+.my-jps-club-container .accordion-toggle[aria-expanded="true"] .arrow {
+    transform: rotate(180deg);
+}
+
+.my-jps-club-container .no-points-error,
+.cap-block .no-points-error {
+    color: red;
+    font-weight: 400;
+    font-size: 14px;
+}
