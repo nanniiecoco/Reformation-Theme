@@ -1,0 +1,73 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "disabled": true,
+      "blocks": {
+        "text-1": {
+          "type": "text",
+          "settings": {
+            "icon": "none",
+            "text": "Add campaign text here."
+          }
+        },
+        "text-2": {
+          "type": "text",
+          "settings": {
+            "icon": "none",
+            "text": "Add campaign text here."
+          }
+        }
+      },
+      "block_order": [
+        "text-1",
+        "text-2"
+      ],
+      "settings": {
+        "announcement_bar": true,
+        "announcement_bar_homepage_only": false,
+        "announcement_bar_layout": "marquee",
+        "direction": "left",
+        "speed": "20s"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "megamenu": {
+          "type": "megamenu",
+          "settings": {
+            "position": "1",
+            "promo_1_heading": "Sparkle Everywhere",
+            "promo_1_link_label": "Shop",
+            "promo_2_heading": "Promotion heading",
+            "promo_2_link_label": "Shop"
+          }
+        }
+      },
+      "block_order": [
+        "megamenu"
+      ],
+      "settings": {
+        "sticky_header": true,
+        "logo_height_range": 30,
+        "logo_height_range_mobile": 30,
+        "style": "style3",
+        "header_shadow": "header--shadow-small",
+        "menu": "main-menu",
+        "transparent_header": true,
+        "show_language_switcher": false,
+        "show_currency_switcher": true,
+        "mobile_secondary_menu": "",
+        "mobile_promo_heading": "Promotion heading",
+        "mobile_promo_link_label": "Shop"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}
